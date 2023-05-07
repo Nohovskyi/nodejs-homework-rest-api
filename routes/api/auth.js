@@ -3,6 +3,7 @@ const { validateBody, authenticate, upload } = require("../../middlewares");
 const { schemasUser } = require("../../models");
 const controllers = require("../../controllers/users");
 
+
 const router = express.Router();
 
 router.post(
@@ -10,6 +11,10 @@ router.post(
   validateBody(schemasUser.registerSchema),
   controllers.registerUser
 );
+
+router.get("/verify/:verificationToken", controllers.verifyEmail);
+
+router.post("/verify", validateBody(schemasUser.emailSchema), controllers.resendVerifyEmail);
 
 router.post(
   "/login",
